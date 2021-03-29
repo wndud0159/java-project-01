@@ -21,7 +21,7 @@ public class ProductDaoImpl implements ProductDao {
 	
 	
 	
-	// 싱글톤 패턴
+	// 싱글턴 패턴
 	public static ProductDaoImpl getInstance() {
 		return INSTANCE;
 	}
@@ -40,15 +40,12 @@ public class ProductDaoImpl implements ProductDao {
 	
 	private void getClose(ResultSet rs, PreparedStatement pstmt, Connection conn)throws SQLException {
 		if(rs != null) {
-			System.out.println("rsClose");
 			rs.close();
 		}
 		if(pstmt != null) {
-			System.out.println("pstmtClose");
 			pstmt.close();
 		}
 		if(conn != null) {
-			System.out.println("connClose");
 			conn.close();
 		}
 	}
@@ -56,8 +53,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductDto> productTypeList() {
 		this.conn = getConnection();
-		System.out.println("Connection Success");
-		final String sql = "select type from product";
+		final String sql = "select * from product order by productId asc";
 		try {
 			this.pstmt = conn.prepareStatement(sql);
 			this.rs = this.pstmt.executeQuery();
@@ -65,7 +61,7 @@ public class ProductDaoImpl implements ProductDao {
 			final List<ProductDto> list = new ArrayList<>();
 			
 			while(rs.next()) {
-				list.add(new ProductDto(rs.getString("type")));
+				list.add(new ProductDto(rs.getLong("productId"),rs.getString("productType")));
 			}
 			
 			getClose(this.rs, this.pstmt, this.conn);
@@ -80,10 +76,20 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<ProductDto> productListByType(String type) {
 		this.conn = getConnection();
-		final String sql = "select name, price from product ";
+		final String sql = "select productId, productName, productPrice from productInfo where productType=? order by productId asc";
 		try {
 			this.pstmt = conn.prepareStatement(sql);
 			this.pstmt.setString(1, type);
+			rs = pstmt.executeQuery();
+			
+			final List<ProductDto> list = new ArrayList<>();
+			
+			while(rs.next()) {
+				list.add(new ProductDto(rs.getLong("productId"),rs.getString("productName"),rs.getLong("productPrice")));
+			}
+			
+			getClose(this.rs, this.pstmt, this.conn);
+			return list;
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}

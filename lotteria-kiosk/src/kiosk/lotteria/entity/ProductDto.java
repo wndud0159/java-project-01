@@ -1,42 +1,67 @@
 package kiosk.lotteria.entity;
 
 public class ProductDto {
-	private int number;
-	private String type;
-	private String name;
-	private long price;
+	private long productId;
+	private String productType;
+	private String productName;
+	private long productPrice;
+	private long quantity;
 	
 	public ProductDto() {};
 	
-	public ProductDto(String type) {
-		this.type = type;
+	public ProductDto(long productId, String productType) {
+		this.productId = productId;
+		this.productType = productType;
 	}
 	
-	public int getNumber() {
-		return number;
+	public ProductDto(long productId, String productName, long productPrice) {
+		this.productId = productId;
+		this.productName = productName;
+		this.productPrice = productPrice;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+
+	
+	
+	public long getQuantity() {
+		return quantity;
 	}
-	public String getType() {
-		return type;
+
+	public void setQuantity(long quantity) {
+		this.quantity = quantity;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public long getProductId() {
+		return productId;
 	}
-	public String getName() {
-		return name;
+
+	public void setProductId(long productId) {
+		this.productId = productId;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public String getProductType() {
+		return productType;
 	}
-	public long getPrice() {
-		return price;
+
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
-	public void setPrice(long price) {
-		this.price = price;
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public long getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(long productPrice) {
+		this.productPrice = productPrice;
 	}
 	
 	
-	
+		
 }

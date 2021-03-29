@@ -9,14 +9,12 @@ import kiosk.lotteria.service.ProductService;
 import kiosk.lotteria.service.ProductServiceImpl;
 
 public class Kiosk {
-	private final Scanner scanner = new Scanner(System.in);
+
 	private final ProductService productService = new ProductServiceImpl();
-	private List<ProductDto> productList = new ArrayList<>();
 	
 	public void run() {
-		productList = productService.productTypeList();
-		for(int index = 0; index < productList.size(); index++) {
-			System.out.println(productList.get(index).getType());
-		}
+		productService.welcomeMassage();
+		ProductDto productDto = productService.productListByType(productService.productSelectedType());
+		productService.calculationByQuantity(productService.productQuantity(productDto));
 	}
 }
