@@ -13,23 +13,31 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public void welcomeMassage() {
+		System.out.println("-------------------");
+		System.out.println("-------------------");
 		System.out.println("롯데리아에 오신걸 환영합니다.");
-	}
-	
-	public ProductDto productSelectedType() {
-		final ProductDao productDao = ProductDaoImpl.getInstance();
-		final List<ProductDto> list = productDao.productTypeList();
-		
-		for(ProductDto product : list) {
-			System.out.printf("%d. %s%n",product.getProductId(),product.getProductType());
-		}
-		System.out.print("선택(숫자입력)>>");
-		int selection = scanner.nextInt();
-		return list.get(selection-1);
+		System.out.println("1. 쇼핑하기");
+		System.out.println("2. 장바구니 확인");
+		System.out.print("선택>>");
 	}
 	
 	@Override
-	public ProductDto productListByType(ProductDto productDto) {
+	public List<ProductDto> productSelectedType() {
+		final ProductDao productDao = ProductDaoImpl.getInstance();
+		final List<ProductDto> list = productDao.productTypeList();
+		System.out.println("-------------------");
+		System.out.println("-------------------");
+		for(ProductDto product : list) {
+			System.out.printf("%d. %s%n",product.getProductId(),product.getProductType());
+		}
+		System.out.println("0. 뒤로가기");
+		System.out.print("선택>>");
+		
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> productListByType(ProductDto productDto) {
 		final ProductDao productDao = ProductDaoImpl.getInstance();
 		final List<ProductDto> list = productDao.productListByType(productDto.getProductType());
 		
@@ -38,28 +46,62 @@ public class ProductServiceImpl implements ProductService {
 		for(ProductDto product : list) {
 			System.out.printf("%d. %s : %d원%n",product.getProductId(),product.getProductName(),product.getProductPrice());
 		}
-		System.out.print("선택(숫자입력)>>");
-		int selection = scanner.nextInt();
+		System.out.println("0. 뒤로가기");
+		System.out.print("선택>>");
 		
-		return list.get(selection-1);
-		
+		return list;
 	}
 	
 	@Override
 	public ProductDto productQuantity(ProductDto productDto) {
-		System.out.println("-------------------");
-		System.out.println("-------------------");
-		System.out.print("수량을 선택 해주세요(숫자만)>>");
-		
-		productDto.setQuantity(scanner.nextLong());
+		System.out.print("수량 선택>>");
 		
 		return productDto;
 	}
 	
 	@Override
-	public void calculationByQuantity(ProductDto productDto) {
-		productDto.setProductPrice(productDto.getProductPrice()*productDto.getQuantity());
-		System.out.printf("선택한 상품 : %s %n선택한 수량 : %d %n총 가격 : %d",productDto.getProductName(),productDto.getQuantity(),productDto.getProductPrice());
-		
+	public void calculation(List<ProductDto> list) {
+		long total = 0;
+		System.out.println("-------------------");
+		for(ProductDto product : list) {
+			product.setProductPrice(product.getProductPrice()*product.getQuantity());
+			total += product.getProductPrice();
+			System.out.printf("%s %d개 : %d원%n",product.getProductName(),product.getQuantity(),product.getProductPrice());
+		}
+		System.out.println("-------------------");
+		System.out.println("총 결제 금액 : " + total + "원");	
+	}
+	
+	@Override
+	public void emptyShoppingBasket() {
+		System.out.println("-------------------");
+		System.out.println("-------------------");
+		System.out.println("장바구니가 비어있습니다.");
+		System.out.println("0. 뒤로가기");
+		System.out.print("선택>>");
+	}
+	
+	@Override
+	public void productAddMassage(ProductDto productDto) {
+		System.out.println("-------------------");
+		System.out.println("-------------------");
+		System.out.printf("%s를 %d개 담았습니다.%n",productDto.getProductName(),productDto.getQuantity());
+	}
+	
+	@Override
+	public void paymentOrShoppingBasketMassage() {
+		System.out.println("1. 결제 / 2. 장바구니 담기");
+		System.out.print("선택>>");
+	}
+	
+	@Override
+	public void shoppingBasketList(List<ProductDto> list) {
+		System.out.println("-------------------");
+		System.out.println("-------------------");
+		for(ProductDto product : list) {
+			System.out.printf("%s : %d개%n",product.getProductName(),product.getQuantity());
+		}
+		System.out.println("1. 결제 / 0. 뒤로가기 / 9. 비우기");
+		System.out.print("선택>>");
 	}
 }

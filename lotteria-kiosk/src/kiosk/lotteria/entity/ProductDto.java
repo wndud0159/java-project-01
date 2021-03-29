@@ -6,6 +6,7 @@ public class ProductDto {
 	private String productName;
 	private long productPrice;
 	private long quantity;
+	private long selection;
 	
 	public ProductDto() {};
 	
@@ -22,6 +23,14 @@ public class ProductDto {
 
 	
 	
+	public long getSelection() {
+		return selection;
+	}
+
+	public void setSelection(long selection) {
+		this.selection = selection;
+	}
+
 	public long getQuantity() {
 		return quantity;
 	}
