@@ -22,8 +22,14 @@ public class Kiosk {
 		int selected = scanner.nextInt();
 		if(selected == 1) {
 			chooseType();
-		} else {
+		} else if(selected == 2) {
 			shoppingBasket();
+		} else if(selected == 3) {
+			final AdminController admin = new AdminController();
+			admin.adminAccess();
+		} else {
+			System.out.println("프로그램 정상 종료.");
+			System.exit(0);
 		}
 	}
 	

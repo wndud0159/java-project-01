@@ -9,7 +9,7 @@ public interface ProductService {
 	//환영메세지
 	public void welcomeMassage();
 	
-	// 상품의 타입을 선택하여 반환
+	// 상품의 타입 리스트 반환
 	public List<ProductDto> productSelectedType();
 	
 	// 타입에 의한 상품 리스트 반환

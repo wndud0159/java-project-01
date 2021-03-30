@@ -18,6 +18,8 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println("롯데리아에 오신걸 환영합니다.");
 		System.out.println("1. 쇼핑하기");
 		System.out.println("2. 장바구니 확인");
+		System.out.println("3. 관리자 모드");
+		System.out.println("4. 프로그램 종료");
 		System.out.print("선택>>");
 	}
 	
@@ -25,10 +27,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDto> productSelectedType() {
 		final ProductDao productDao = ProductDaoImpl.getInstance();
 		final List<ProductDto> list = productDao.productTypeList();
+		int count = 1;
 		System.out.println("-------------------");
 		System.out.println("-------------------");
 		for(ProductDto product : list) {
-			System.out.printf("%d. %s%n",product.getProductId(),product.getProductType());
+			System.out.printf("%d. %s%n",count,product.getProductType());
+			count++;
 		}
 		System.out.println("0. 뒤로가기");
 		System.out.print("선택>>");
@@ -40,11 +44,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDto> productListByType(ProductDto productDto) {
 		final ProductDao productDao = ProductDaoImpl.getInstance();
 		final List<ProductDto> list = productDao.productListByType(productDto.getProductType());
-		
+		int count = 1;
 		System.out.println("-------------------");
 		System.out.println("-------------------");
 		for(ProductDto product : list) {
-			System.out.printf("%d. %s : %d원%n",product.getProductId(),product.getProductName(),product.getProductPrice());
+			System.out.printf("%d. %s : %d원%n",count,product.getProductName(),product.getProductPrice());
+			count++;
 		}
 		System.out.println("0. 뒤로가기");
 		System.out.print("선택>>");
